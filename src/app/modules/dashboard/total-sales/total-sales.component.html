@@ -1,6 +1,32 @@
 <div
-  class="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-sm xl:max-w-md flex flex-col items-center justify-center border border-gray-200 rounded-xl p-4 h-80"
+  class="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-sm xl:max-w-md flex flex-col items-center justify-center border shadow-[0_0_0_1px_rgba(0,0,0,0.05)] bg-white rounded-xl p-4 h-80"
 >
   <h3 class="text-lg font-roboto mb-2">{{ titleText }}</h3>
-  <canvas #totalSalesCanvas class="w-full h-full"></canvas>
+
+  @if (isLoading) {
+  <div class="flex flex-col items-center justify-center h-full">
+    <svg
+      class="animate-spin h-6 w-6 text-blue-600 mb-2"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <circle
+        class="opacity-25"
+        cx="12"
+        cy="12"
+        r="10"
+        stroke="currentColor"
+        stroke-width="4"
+      ></circle>
+      <path
+        class="opacity-75"
+        fill="currentColor"
+        d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+      ></path>
+    </svg>
+    <span class="text-gray-600">Carregando gráfico...</span>
+  </div>
+  } @else {
+  <canvas #totalSalesCanvas class="w-full h-full"></canvas> }
 </div>

@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import {
-  AfterViewInit,
   Component,
   ElementRef,
   EventEmitter,
@@ -20,17 +19,20 @@ Chart.register(...registerables);
   templateUrl: './total-sales.component.html',
   styleUrl: './total-sales.component.css',
 })
-export class TotalSalesComponent implements OnInit, AfterViewInit {
+export class TotalSalesComponent implements OnInit {
   sales: Sale[] = [];
   totalSales: number = 0;
 
   @ViewChild('totalSalesCanvas', { static: false })
   totalSalesCanvas!: ElementRef<HTMLCanvasElement>;
   totalSalesChart!: Chart;
-  titleText: string = 'Total Sales';
+  titleText: string = 'Total Vendas';
 
   @Output() totalSalesChange = new EventEmitter<number>();
   @Output() titleChange = new EventEmitter<string>();
+
+  isLoading: boolean = true;
+
   data = {
     labels: ['Red', 'Blue', 'Yellow'],
     datasets: [
@@ -53,10 +55,16 @@ export class TotalSalesComponent implements OnInit, AfterViewInit {
     this.salesService.getTotalRevenue().subscribe((total) => {
       this.totalSales = total;
       this.totalSalesChange.emit(this.totalSales);
+
+      setTimeout(() => {
+        this.isLoading = false;
+
+        setTimeout(() => this.renderChart(), 0);
+      }, 2000);
     });
   }
 
-  ngAfterViewInit() {
+  renderChart() {
     this.salesService.getSales().subscribe((data) => {
       this.sales = data;
 
