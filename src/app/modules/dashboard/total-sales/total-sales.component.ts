@@ -52,15 +52,22 @@ export class TotalSalesComponent implements OnInit {
   constructor(private salesService: SalesService) {}
 
   ngOnInit() {
-    this.salesService.getTotalRevenue().subscribe((total) => {
-      this.totalSales = total;
+    this.isLoading = true;
+
+    this.salesService.getSales().subscribe((data) => {
+      this.sales = data;
+
+      this.totalSales = this.sales.reduce(
+        (acc, sale) => acc + sale.price * sale.quantity,
+        0
+      );
       this.totalSalesChange.emit(this.totalSales);
+      this.titleChange.emit(this.titleText);
 
       setTimeout(() => {
         this.isLoading = false;
-
         setTimeout(() => this.renderChart(), 0);
-      }, 2000);
+      }, 500);
     });
   }
 

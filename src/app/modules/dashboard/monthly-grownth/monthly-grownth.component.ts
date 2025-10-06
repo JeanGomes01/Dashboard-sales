@@ -1,8 +1,9 @@
-import { CommonModule } from '@angular/common';
 import {
+  AfterViewInit,
   Component,
   ElementRef,
   EventEmitter,
+  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -13,11 +14,10 @@ Chart.register(...registerables);
 @Component({
   selector: 'app-monthly-grownth',
   standalone: true,
-  imports: [CommonModule],
   templateUrl: './monthly-grownth.component.html',
-  styleUrl: './monthly-grownth.component.css',
+  styleUrls: ['./monthly-grownth.component.css'],
 })
-export class MonthlyGrownthComponent {
+export class MonthlyGrownthComponent implements OnInit, AfterViewInit {
   @ViewChild('monthlyGrownthCanvas', { static: false })
   monthlyGrownthCanvas!: ElementRef<HTMLCanvasElement>;
   monthlyGrownthChart!: Chart;
@@ -28,60 +28,76 @@ export class MonthlyGrownthComponent {
   @Output() titleChange = new EventEmitter<string>();
   @Output() monthlyGrownthChange = new EventEmitter<number>();
 
+  monthlyData: { month: string; total: number }[] = [];
+
   constructor(private salesService: SalesService) {}
 
   ngOnInit() {
     this.titleChange.emit(this.titleText);
 
-    setTimeout(() => {
+    this.salesService.getMonthlyGrowth().subscribe((data) => {
+      this.monthlyData = data;
       this.isLoading = false;
-      this.loadChartData();
-    }, 2000);
+
+      if (this.monthlyGrownthCanvas) {
+        this.loadChartData(this.monthlyData);
+      }
+    });
   }
 
-  loadChartData() {
-    // Usa o getProfitByCategory do SalesService
-    this.salesService.getProfitByCategory().subscribe((data) => {
-      const ctx = this.monthlyGrownthCanvas.nativeElement.getContext('2d');
-      const labels = data.map((d) => d.category);
-      const profits = data.map((d) => d.profit);
+  ngAfterViewInit() {
+    this.salesService.getMonthlyGrowth().subscribe((monthlyData) => {
+      this.isLoading = false;
+      this.loadChartData(monthlyData);
+    });
+  }
 
-      if (this.monthlyGrownthChart) this.monthlyGrownthChart.destroy();
+  loadChartData(data: { month: string; total: number }[]) {
+    const ctx = this.monthlyGrownthCanvas.nativeElement.getContext('2d');
+    const labels = data.map((d) => d.month);
+    const totals = data.map((d) => d.total);
 
-      this.monthlyGrownthChart = new Chart(ctx!, {
-        type: 'pie',
-        data: {
-          labels,
-          datasets: [
-            {
-              data: profits,
-              backgroundColor: [
-                'rgba(37, 99, 235, 0.7)', // azul
-                'rgba(16, 185, 129, 0.7)', // verde
-                'rgba(234, 179, 8, 0.7)', // amarelo
-                'rgba(239, 68, 68, 0.7)', // vermelho
-              ],
-              borderColor: 'white',
-              borderWidth: 2,
-            },
-          ],
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: { position: 'bottom' },
-            tooltip: {
-              callbacks: {
-                label: (context) =>
-                  `${context.label}: R$ ${context.parsed.toLocaleString(
-                    'pt-BR'
-                  )}`,
-              },
+    if (this.monthlyGrownthChart) this.monthlyGrownthChart.destroy();
+
+    this.monthlyGrownthChart = new Chart(ctx!, {
+      type: 'pie',
+      data: {
+        labels,
+        datasets: [
+          {
+            label: 'Crescimento Mensal (R$)',
+            data: totals,
+            backgroundColor: 'rgba(37, 99, 235, 0.7)',
+            borderColor: 'rgba(37, 99, 235, 1)',
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: (context) =>
+                `R$ ${context.parsed.toLocaleString('pt-BR')}`,
             },
           },
         },
-      });
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              callback: (value) =>
+                `R$ ${Number(value).toLocaleString('pt-BR')}`,
+            },
+          },
+        },
+      },
     });
+
+    const totalGrowth = totals.reduce((acc, val) => acc + val, 0);
+    this.monthlyGrownthChange.emit(totalGrowth);
   }
 }

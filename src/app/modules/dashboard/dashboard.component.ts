@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-
 import { Chart, registerables } from 'chart.js';
 import { Observable } from 'rxjs';
 import { Sale } from '../../types/sales.interface';
