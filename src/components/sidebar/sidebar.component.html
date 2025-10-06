@@ -29,28 +29,38 @@
       </button>
     </div>
 
-    <nav class="flex-1 p-4 space-y-2">
+    <nav
+      class="flex-1 space-y-2"
+      [ngClass]="{
+        'flex flex-col items-center justify-start mt-4': !isOpen,
+        'p-4': isOpen
+      }"
+    >
       <a
         routerLink="/dashboard"
-        class="flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-700"
+        class="flex items-center gap-2 py-2 rounded hover:bg-gray-700 transition-all duration-300"
+        [ngClass]="{ 'justify-center w-full': !isOpen, 'px-4': isOpen }"
       >
         📊 <span *ngIf="isOpen">Dashboard</span>
       </a>
       <a
         routerLink="/clientes"
-        class="flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-700"
+        class="flex items-center gap-2 py-2 rounded hover:bg-gray-700 transition-all duration-300"
+        [ngClass]="{ 'justify-center w-full': !isOpen, 'px-4': isOpen }"
       >
         👥 <span *ngIf="isOpen">Clientes</span>
       </a>
       <a
         routerLink="/materiais"
-        class="flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-700"
+        class="flex items-center gap-2 py-2 rounded hover:bg-gray-700 transition-all duration-300"
+        [ngClass]="{ 'justify-center w-full': !isOpen, 'px-4': isOpen }"
       >
         📦 <span *ngIf="isOpen">Materiais</span>
       </a>
       <a
         routerLink="/orcamento"
-        class="flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-700"
+        class="flex items-center gap-2 py-2 rounded hover:bg-gray-700 transition-all duration-300"
+        [ngClass]="{ 'justify-center w-full': !isOpen, 'px-4': isOpen }"
       >
         📑 <span *ngIf="isOpen">Orçamentos</span>
       </a>

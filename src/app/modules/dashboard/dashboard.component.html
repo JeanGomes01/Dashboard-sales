@@ -29,9 +29,8 @@
     <strong>Faturamento Total: R$ {{ totalSales }}</strong>
   </p>
 
-  <!-- Container que organiza os gráficos -->
   <div
-    class="w-full flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0 items-center justify-center"
+    class="w-full flex flex-col md:flex-row md:space-x-2 space-y-4 md:space-y-0 items-center justify-center"
   >
     <app-total-sales
       class="w-full md:w-1/2"
@@ -44,5 +43,9 @@
       (profitChange)="onProfitChange($event)"
       (titleChange)="onTitleChange($event)"
     ></app-profit>
+
+    <app-average-ticket></app-average-ticket>
+
+    <app-monthly-grownth></app-monthly-grownth>
   </div>
 </main>

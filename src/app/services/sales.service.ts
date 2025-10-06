@@ -82,6 +82,15 @@ export class SalesService {
     return of(profits).pipe(delay(1000));
   }
 
+  getAverageTicket(): Observable<number> {
+    const total = this.sales.reduce(
+      (acc, sale) => acc + sale.price * sale.quantity,
+      0
+    );
+    const average = total / this.sales.length;
+    return of(average).pipe(delay(1000));
+  }
+
   getSalesByCategory(category: string): Observable<Sale[]> {
     return of(this.sales.filter((sale) => sale.category === category));
   }
