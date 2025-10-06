@@ -43,6 +43,14 @@ export class DashboardComponent implements OnInit {
     this.totalRevenue = profit;
   }
 
+  onAverageTicketChange(ticket: number) {
+    this.totalRevenue = ticket;
+  }
+
+  onMonthlyGrownthChange(growth: number) {
+    this.totalRevenue = growth;
+  }
+
   onTitleChange(title: string) {
     this.titleText = title;
   }

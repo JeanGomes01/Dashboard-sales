@@ -1,6 +1,7 @@
-<div class="flex">
+<div class="flex h-screen bg-gray-100">
   <app-sidebar></app-sidebar>
-  <main class="flex flex-col w-full">
+
+  <main class="flex flex-col w-full h-screen overflow-hidden">
     <header
       class="bg-gray-200 shadow flex justify-between items-center px-6 py-4"
     >
@@ -12,6 +13,9 @@
         Logout
       </button>
     </header>
-    <router-outlet></router-outlet>
+
+    <div class="flex-1 overflow-y-auto p-6">
+      <router-outlet></router-outlet>
+    </div>
   </main>
 </div>
