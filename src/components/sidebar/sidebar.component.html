@@ -1,4 +1,4 @@
-<div class="flex h-screen bg-gray-100">
+<div class="flex h-screen bg-gray-800">
   <aside
     class="bg-gray-900 text-white flex flex-col transition-all duration-300 ease-in-out"
     [class.w-64]="isOpen"
@@ -37,32 +37,34 @@
       }"
     >
       <a
-        routerLink="/dashboard"
+        routerLink="/overview"
         class="flex items-center gap-2 py-2 rounded hover:bg-gray-700 transition-all duration-300"
         [ngClass]="{ 'justify-center w-full': !isOpen, 'px-4': isOpen }"
       >
-        📊 <span *ngIf="isOpen">Dashboard</span>
+        📊 <span *ngIf="isOpen">Overview</span>
+      </a>
+
+      <a
+        routerLink="/reports"
+        class="flex items-center gap-2 py-2 rounded hover:bg-gray-700 transition-all duration-300"
+        [ngClass]="{ 'justify-center w-full': !isOpen, 'px-4': isOpen }"
+      >
+        📄 <span *ngIf="isOpen">Reports</span>
       </a>
       <a
-        routerLink="/clientes"
+        routerLink="/insights"
         class="flex items-center gap-2 py-2 rounded hover:bg-gray-700 transition-all duration-300"
         [ngClass]="{ 'justify-center w-full': !isOpen, 'px-4': isOpen }"
       >
-        👥 <span *ngIf="isOpen">Clientes</span>
+        📈 <span *ngIf="isOpen">Insights</span>
       </a>
+
       <a
-        routerLink="/materiais"
+        routerLink="/contact"
         class="flex items-center gap-2 py-2 rounded hover:bg-gray-700 transition-all duration-300"
         [ngClass]="{ 'justify-center w-full': !isOpen, 'px-4': isOpen }"
       >
-        📦 <span *ngIf="isOpen">Materiais</span>
-      </a>
-      <a
-        routerLink="/orcamento"
-        class="flex items-center gap-2 py-2 rounded hover:bg-gray-700 transition-all duration-300"
-        [ngClass]="{ 'justify-center w-full': !isOpen, 'px-4': isOpen }"
-      >
-        📑 <span *ngIf="isOpen">Orçamentos</span>
+        ✉️ <span *ngIf="isOpen">Contacts</span>
       </a>
     </nav>
   </aside>

@@ -13,10 +13,31 @@ export const routes: Routes = [
     component: LayoutComponent,
     children: [
       {
-        path: 'dashboard',
+        path: 'overview',
         loadComponent: () =>
           import('./modules/dashboard/dashboard.component').then(
             (c) => c.DashboardComponent
+          ),
+      },
+      {
+        path: 'reports',
+        loadComponent: () =>
+          import('./modules/reports/reports.component').then(
+            (c) => c.ReportsComponent
+          ),
+      },
+      {
+        path: 'insights',
+        loadComponent: () =>
+          import('./modules/insights/insights.component').then(
+            (c) => c.InsightsComponent
+          ),
+      },
+      {
+        path: 'contact',
+        loadComponent: () =>
+          import('./modules/contact/contact.component').then(
+            (c) => c.ContactComponent
           ),
       },
     ],
