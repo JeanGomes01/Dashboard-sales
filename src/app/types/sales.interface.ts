@@ -1,4 +1,5 @@
 export interface Sale {
+  created_at: Date;
   id: number;
   product: string;
   category: string;

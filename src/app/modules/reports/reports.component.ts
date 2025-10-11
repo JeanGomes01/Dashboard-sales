@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import jsPDF from 'jspdf';
 
 import { SalesService } from '../../services/sales.service';
+import { SupabaseService } from '../../services/supabase.service';
 import { Sale } from '../../types/sales.interface';
 
 @Component({
@@ -19,7 +20,10 @@ export class ReportsComponent implements OnInit {
   filteredData: any[] = [];
   reportType: string = 'total-sales';
   period: string = 'this-month';
-  constructor(private salesService: SalesService) {}
+  constructor(
+    private salesService: SalesService,
+    private supabaseService: SupabaseService
+  ) {}
 
   ngOnInit(): void {
     this.loadSales();
@@ -28,6 +32,7 @@ export class ReportsComponent implements OnInit {
   loadSales() {
     this.salesService.getSales().subscribe((sales) => {
       this.data = sales;
+      console.log('Dados da caixa:', sales);
       this.applyFilter();
     });
   }
@@ -35,33 +40,33 @@ export class ReportsComponent implements OnInit {
   applyFilter() {
     switch (this.reportType) {
       case 'profit':
-        this.filteredData = this.data.map((s) => ({
-          date: s.date,
-          value: s.price * s.quantity * 0.3,
+        this.filteredData = this.data.map((sales) => ({
+          ...sales,
+          value: sales.price * sales.quantity * 0.3,
         }));
         break;
 
       case 'total-sales':
-        this.filteredData = this.data.map((s) => ({
-          date: s.date,
-          value: s.price * s.quantity,
+        this.filteredData = this.data.map((sales) => ({
+          ...sales,
+          value: sales.price * sales.quantity,
         }));
         break;
 
       case 'average-ticket':
-        this.filteredData = this.data.map((s) => ({
-          date: s.date,
-          value: s.price,
+        this.filteredData = this.data.map((sales) => ({
+          ...sales,
+          value: sales.price,
         }));
         break;
 
       case 'monthly-growth':
-        this.filteredData = this.data.map((s, i, arr) => {
-          if (i === 0) return { date: s.date, value: 0 };
-          const prev = arr[i - 1].price * arr[i - 1].quantity;
-          const curr = s.price * s.quantity;
+        this.filteredData = this.data.map((sales, index, arr) => {
+          if (index === 0) return { ...sales, value: 0 };
+          const prev = arr[index - 1].price * arr[index - 1].quantity;
+          const curr = sales.price * sales.quantity;
           const growth = ((curr - prev) / prev) * 100;
-          return { date: s.date, value: growth.toFixed(2) };
+          return { date: sales.date, value: growth.toFixed(2) };
         });
         break;
 

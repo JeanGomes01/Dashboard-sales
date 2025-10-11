@@ -72,8 +72,10 @@
       <table class="min-w-full text-sm text-gray-700">
         <thead class="bg-gray-50 text-gray-600 uppercase text-xs">
           <tr>
+            <th class="px-6 py-3 text-left">Name</th>
             <th class="px-6 py-3 text-left">Data</th>
             <th class="px-6 py-3 text-left">Valor</th>
+            <th class="px-6 py-3 text-left">Quantity</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-100">
@@ -81,8 +83,10 @@
             *ngFor="let item of filteredData"
             class="hover:bg-gray-50 transition"
           >
+            <td class="px-6 py-3">{{ item.product }}</td>
             <td class="px-6 py-3">{{ item.date | date : "dd/MM/yyyy" }}</td>
             <td class="px-6 py-3">{{ item.value | number : "1.2-2" }}</td>
+            <td class="px-6 py-3">{{ item.quantity }}</td>
           </tr>
 
           <tr *ngIf="!filteredData?.length">
