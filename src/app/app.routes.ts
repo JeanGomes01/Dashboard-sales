@@ -13,6 +13,11 @@ export const routes: Routes = [
     component: LayoutComponent,
     children: [
       {
+        path: '',
+        redirectTo: 'overview',
+        pathMatch: 'full',
+      },
+      {
         path: 'overview',
         loadComponent: () =>
           import('./modules/dashboard/dashboard.component').then(

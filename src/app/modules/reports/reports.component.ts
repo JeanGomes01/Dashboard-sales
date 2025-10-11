@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { FormsModule } from '@angular/forms';
 import jsPDF from 'jspdf';
-import { ReportsService } from '../../services/reports.service';
+
 import { SalesService } from '../../services/sales.service';
 import { Sale } from '../../types/sales.interface';
 
@@ -19,10 +19,7 @@ export class ReportsComponent implements OnInit {
   filteredData: any[] = [];
   reportType: string = 'total-sales';
   period: string = 'this-month';
-  constructor(
-    private reportsService: ReportsService,
-    private salesService: SalesService
-  ) {}
+  constructor(private salesService: SalesService) {}
 
   ngOnInit(): void {
     this.loadSales();
