@@ -20,6 +20,12 @@ export class ReportsComponent implements OnInit {
   filteredData: any[] = [];
   reportType: string = 'total-sales';
   period: string = 'this-month';
+
+  pagedData: any[] = [];
+  currentPage = 1;
+  pageSize = 5;
+  totalPages = 0;
+
   constructor(
     private salesService: SalesService,
     private supabaseService: SupabaseService
@@ -73,6 +79,41 @@ export class ReportsComponent implements OnInit {
       default:
         this.filteredData = [];
     }
+    this.totalPages = Math.ceil(this.filteredData.length / this.pageSize);
+    this.updatePagedData();
+  }
+
+  updatePagedData() {
+    const start = (this.currentPage - 1) * this.pageSize;
+    const end = start + this.pageSize;
+    this.pagedData = this.filteredData.slice(start, end);
+  }
+
+  goToPage(page: number) {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.updatePagedData();
+    }
+  }
+
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.updatePagedData();
+    }
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.updatePagedData();
+    }
+  }
+
+  totalPagesArray() {
+    return Array(this.totalPages)
+      .fill(0)
+      .map((_, index) => index + 1);
   }
 
   onReportTypeChange(event: any) {

@@ -11,7 +11,7 @@
         >
           <option value="profit">Lucro</option>
           <option value="total-sales">Total de Vendas</option>
-          <option value="average-ticket">Ticket Médio</option>
+          <option value="average-ticket">Média</option>
           <option value="monthly-growth">Crescimento Mensal</option>
         </select>
 
@@ -80,7 +80,7 @@
         </thead>
         <tbody class="divide-y divide-gray-100">
           <tr
-            *ngFor="let item of filteredData"
+            *ngFor="let item of pagedData"
             class="hover:bg-gray-50 transition"
           >
             <td class="px-6 py-3">{{ item.product }}</td>
@@ -96,6 +96,37 @@
           </tr>
         </tbody>
       </table>
+      <div class="flex justify-center items-center mt-4 gap-2">
+        <button
+          (click)="previousPage()"
+          [disabled]="currentPage === 1"
+          class="px-3 py-2 bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200 disabled:opacity-50"
+        >
+          ← Anterior
+        </button>
+
+        <ng-container *ngFor="let page of totalPagesArray()">
+          <button
+            (click)="goToPage(page)"
+            [ngClass]="{
+              'bg-gray-800 text-white': currentPage === page,
+              'bg-gray-100 text-gray-700 hover:bg-gray-200':
+                currentPage !== page
+            }"
+            class="px-3 py-2 rounded-lg transition"
+          >
+            {{ page }}
+          </button>
+        </ng-container>
+
+        <button
+          (click)="nextPage()"
+          [disabled]="currentPage === totalPages"
+          class="px-3 py-2 bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200 disabled:opacity-50"
+        >
+          Próximo →
+        </button>
+      </div>
     </div>
   </div>
 </div>
