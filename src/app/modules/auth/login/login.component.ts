@@ -18,6 +18,8 @@ import { AuthService } from '../../../services/auth.service';
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  feedbackMessage: string | null = null;
+  feedbackType: 'success' | 'error' | null = null;
 
   constructor(private authService: AuthService, private router: Router) {
     this.loginForm = new FormGroup({
@@ -27,16 +29,29 @@ export class LoginComponent {
   }
 
   onSubmit() {
-    if ((this, this.loginForm.valid)) {
+    if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
-      if (this.authService.login(email, password)) {
-        alert('Login efetuado com sucesso!');
-        this.router.navigate(['/']);
+      const loginSuccess = this.authService.login(email, password);
+
+      if (loginSuccess) {
+        this.showFeedback('Login efetuado com sucesso!', 'success');
+        setTimeout(() => {
+          this.router.navigate(['/']);
+        }, 1500);
       } else {
-        alert('Usuário ou senha incorretos!');
+        this.showFeedback('Usuário ou senha incorretos!', 'error');
       }
     } else {
       this.loginForm.markAllAsTouched();
     }
+  }
+
+  private showFeedback(message: string, type: 'success' | 'error') {
+    this.feedbackMessage = message;
+    this.feedbackType = type;
+    setTimeout(() => {
+      this.feedbackMessage = null;
+      this.feedbackType = null;
+    }, 3000);
   }
 }

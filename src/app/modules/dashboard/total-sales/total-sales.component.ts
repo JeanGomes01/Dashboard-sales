@@ -33,6 +33,10 @@ export class TotalSalesComponent implements OnInit {
 
   isLoading: boolean = true;
 
+  selectedPeriod: String = 'all';
+  startDate: string = '';
+  endDate: string = '';
+
   data = {
     labels: ['Red', 'Blue', 'Yellow'],
     datasets: [
@@ -69,6 +73,84 @@ export class TotalSalesComponent implements OnInit {
         setTimeout(() => this.renderChart(), 0);
       }, 500);
     });
+
+    this.filterSales();
+  }
+
+  filterSales() {
+    if (!this.sales.length) return;
+
+    let filtered = [...this.sales];
+
+    const now = new Date();
+
+    switch (this.selectedPeriod) {
+      case 'this-week': {
+        const startOfWeek = new Date();
+        startOfWeek.setDate(now.getDate() - now.getDay());
+        filtered = filtered.filter(
+          (s) => new Date(s.date) >= startOfWeek && new Date(s.date) <= now
+        );
+        break;
+      }
+      case 'this-month': {
+        const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+        filtered = filtered.filter(
+          (s) => new Date(s.date) >= startOfMonth && new Date(s.date) <= now
+        );
+        break;
+      }
+      case 'last-month': {
+        const startOfLastMonth = new Date(
+          now.getFullYear(),
+          now.getMonth() - 1,
+          1
+        );
+        const endOfLastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+        filtered = filtered.filter(
+          (s) =>
+            new Date(s.date) >= startOfLastMonth &&
+            new Date(s.date) <= endOfLastMonth
+        );
+        break;
+      }
+      case 'this-year': {
+        const startOfYear = new Date(now.getFullYear(), 0, 1);
+        filtered = filtered.filter(
+          (s) => new Date(s.date) >= startOfYear && new Date(s.date) <= now
+        );
+        break;
+      }
+    }
+
+    // Se o usuário selecionar manualmente um intervalo
+    if (this.startDate && this.endDate) {
+      const start = new Date(this.startDate);
+      const end = new Date(this.endDate);
+      filtered = filtered.filter(
+        (s) => new Date(s.date) >= start && new Date(s.date) <= end
+      );
+    }
+
+    // Atualiza o gráfico
+    this.updateChart(filtered);
+  }
+
+  updateChart(filteredSales: Sale[]) {
+    const categories = Array.from(
+      new Set(filteredSales.map((s) => s.category))
+    );
+    const categoryTotals = categories.map((cat) =>
+      filteredSales
+        .filter((s) => s.category === cat)
+        .reduce((sum, s) => sum + s.price * s.quantity, 0)
+    );
+
+    if (this.totalSalesChart) {
+      this.totalSalesChart.data.labels = categories;
+      this.totalSalesChart.data.datasets[0].data = categoryTotals;
+      this.totalSalesChart.update();
+    }
   }
 
   renderChart() {
