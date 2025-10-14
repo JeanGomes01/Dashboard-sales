@@ -253,6 +253,10 @@ Interface e experiência do usuário desenvolvidas com foco na usabilidade e des
 | :------------------------------------------: |
 | ![Relatórios](github/tela-de-relatorios.png) |
 
+|             Tela de Contatos             |
+| :--------------------------------------: |
+| ![Contatos](github/tela-de-contatos.png) |
+
 ---
 
 ⭐ **Se este projeto foi útil, considere dar uma estrela!**
