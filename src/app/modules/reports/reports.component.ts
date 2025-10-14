@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { FormsModule } from '@angular/forms';
 import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 import { SalesService } from '../../services/sales.service';
 import { SupabaseService } from '../../services/supabase.service';
@@ -129,9 +130,16 @@ export class ReportsComponent implements OnInit {
 
   exportCSV(): void {
     if (!this.filteredData.length) return;
+
     const csvRows = [
-      ['Data', 'Valor'],
-      ...this.filteredData.map((d) => [d.date, d.value]),
+      ['Produto', 'Categoria', 'Data', 'Valor', 'Quantidade'],
+      ...this.filteredData.map((d) => [
+        d.product,
+        d.category,
+        d.date,
+        d.value,
+        d.quantity,
+      ]),
     ];
     const csvContent = csvRows.map((e) => e.join(',')).join('\n');
     const blob = new Blob([csvContent], { type: 'text/csv' });
@@ -145,15 +153,30 @@ export class ReportsComponent implements OnInit {
 
   exportPDF(): void {
     if (!this.filteredData.length) return;
+
     const doc = new jsPDF();
     doc.text(`${this.reportType.replace('-', ' ')} Report`, 10, 10);
+
     let y = 20;
-    this.filteredData.forEach((d) => {
-      doc.text(`${d.date} | ${d.value}`, 10, y);
-      y += 10;
+    const lineHeight = 10;
+
+    doc.text('Produto | Categoria | Data | Valor | Quantidade', 10, y);
+    y += lineHeight;
+
+    this.filteredData.forEach((document) => {
+      const row = `${document.product} | ${document.category} | ${new Date(
+        document.date
+      ).toLocaleDateString('pt-BR')} | ${document.value.toFixed(2)} | ${
+        document.quantity
+      }`;
+      doc.text(row, 10, y);
+      y += lineHeight;
+
       if (y > 280) {
         doc.addPage();
         y = 20;
+        doc.text('Produto | Categoria | Data | Valor | Quantidade', 10, y);
+        y += lineHeight;
       }
     });
     doc.save(`${this.reportType}_report.pdf`);

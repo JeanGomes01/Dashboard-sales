@@ -1,12 +1,10 @@
 <div class="p-4 sm:p-6 md:p-8 flex flex-col gap-6 max-w-full">
-    <!-- Gerar Relatório -->
     <div class="border shadow-[0_0_0_1px_rgba(0,0,0,0.05)] bg-white rounded-xl p-4 sm:p-6">
         <h2 class="text-xl sm:text-2xl font-semibold mb-4 text-gray-800">
             Gerar Relatório
         </h2>
 
         <div class="flex flex-col sm:flex-row sm:items-end gap-4 justify-between">
-            <!-- Selects -->
             <div class="flex flex-col sm:flex-row flex-wrap gap-4 w-full sm:w-auto">
                 <select [(ngModel)]="reportType" (change)="onReportTypeChange($event)" class="w-full sm:w-auto border-gray-300 px-3 py-2 sm:px-4 sm:py-2 text-sm sm:text-base focus:ring-2 focus:ring-blue-200 border shadow-[0_0_0_1px_rgba(0,0,0,0.05)] bg-white rounded-xl transition">
           <option value="total-sales">Total de Vendas</option>
@@ -23,7 +21,6 @@
         </select>
             </div>
 
-            <!-- Botões -->
             <div class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
                 <button (click)="exportCSV()" class="w-full sm:w-auto bg-gray-900 text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition">
           Exportar CSV
@@ -35,7 +32,6 @@
         </div>
     </div>
 
-    <!-- Tabela de Relatório -->
     <div class="shadow-md bg-white rounded-xl p-4 sm:p-6 overflow-x-auto">
         <h2 class="text-xl sm:text-2xl font-semibold mb-4 text-gray-800 flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 text-blue-600">
@@ -76,7 +72,6 @@
             </tbody>
         </table>
 
-        <!-- Paginação -->
         <div class="flex flex-wrap justify-center items-center mt-4 gap-2">
             <button (click)="previousPage()" [disabled]="currentPage === 1" class="px-3 py-2 bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200 disabled:opacity-50">
         ← Anterior
