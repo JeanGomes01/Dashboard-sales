@@ -6,11 +6,11 @@
             <button (click)="isOpen = !isOpen" class="text-gray-300 hover:text-white bg-gray-800 hover:bg-gray-700 p-2 rounded-full shadow-md transition-all duration-300 cursor-pointer">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6 transition-transform duration-300"
+          class="h-6 w-6 transform transition-transform duration-300"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
-          [class.rotate-180]="!isOpen"
+          [ngClass]="{ 'scale-x-[-1]': !isOpen, 'scale-x-100': isOpen }"
         >
           <path
             stroke-linecap="round"
