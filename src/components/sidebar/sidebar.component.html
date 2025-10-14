@@ -1,16 +1,9 @@
 <div class="flex h-screen bg-gray-800">
-  <aside
-    class="bg-gray-900 text-white flex flex-col transition-all duration-300 ease-in-out"
-    [class.w-64]="isOpen"
-    [class.w-16]="!isOpen"
-  >
-    <div class="flex items-center justify-between p-4">
-      <span *ngIf="isOpen" class="text-2xl font-bold">Menu</span>
+    <aside class="bg-gray-900 text-white flex flex-col transition-all duration-300 ease-in-out" [class.w-64]="isOpen" [class.w-16]="!isOpen">
+        <div class="flex items-center justify-between p-4">
+            <span *ngIf="isOpen" class="text-2xl font-bold">Menu</span>
 
-      <button
-        (click)="isOpen = !isOpen"
-        class="text-gray-300 hover:text-white bg-gray-800 hover:bg-gray-700 p-2 rounded-full shadow-md transition-all duration-300 cursor-pointer"
-      >
+            <button (click)="isOpen = !isOpen" class="text-gray-300 hover:text-white bg-gray-800 hover:bg-gray-700 p-2 rounded-full shadow-md transition-all duration-300 cursor-pointer">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-6 w-6 transition-transform duration-300"
@@ -27,45 +20,23 @@
           />
         </svg>
       </button>
-    </div>
+        </div>
 
-    <nav
-      class="flex-1 space-y-2"
-      [ngClass]="{
+        <nav class="flex-1 space-y-2" [ngClass]="{
         'flex flex-col items-center justify-start mt-4': !isOpen,
         'p-4': isOpen
-      }"
-    >
-      <a
-        routerLink="/overview"
-        class="flex items-center gap-2 py-2 rounded hover:bg-gray-700 transition-all duration-300"
-        [ngClass]="{ 'justify-center w-full': !isOpen, 'px-4': isOpen }"
-      >
+      }">
+            <a routerLink="/overview" class="flex items-center gap-2 py-2 rounded hover:bg-gray-700 transition-all duration-300" [ngClass]="{ 'justify-center w-full': !isOpen, 'px-4': isOpen }">
         📊 <span *ngIf="isOpen">Overview</span>
       </a>
 
-      <a
-        routerLink="/reports"
-        class="flex items-center gap-2 py-2 rounded hover:bg-gray-700 transition-all duration-300"
-        [ngClass]="{ 'justify-center w-full': !isOpen, 'px-4': isOpen }"
-      >
+            <a routerLink="/reports" class="flex items-center gap-2 py-2 rounded hover:bg-gray-700 transition-all duration-300" [ngClass]="{ 'justify-center w-full': !isOpen, 'px-4': isOpen }">
         📄 <span *ngIf="isOpen">Reports</span>
       </a>
-      <a
-        routerLink="/insights"
-        class="flex items-center gap-2 py-2 rounded hover:bg-gray-700 transition-all duration-300"
-        [ngClass]="{ 'justify-center w-full': !isOpen, 'px-4': isOpen }"
-      >
-        📈 <span *ngIf="isOpen">Insights</span>
-      </a>
 
-      <a
-        routerLink="/contact"
-        class="flex items-center gap-2 py-2 rounded hover:bg-gray-700 transition-all duration-300"
-        [ngClass]="{ 'justify-center w-full': !isOpen, 'px-4': isOpen }"
-      >
+            <a routerLink="/contact" class="flex items-center gap-2 py-2 rounded hover:bg-gray-700 transition-all duration-300" [ngClass]="{ 'justify-center w-full': !isOpen, 'px-4': isOpen }">
         ✉️ <span *ngIf="isOpen">Contacts</span>
       </a>
-    </nav>
-  </aside>
+        </nav>
+    </aside>
 </div>

@@ -7,10 +7,10 @@ Chart.register(...registerables);
   selector: 'app-insights',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './insights.component.html',
-  styleUrl: './insights.component.scss',
+  templateUrl: './overview.component.html',
+  styleUrl: './overview.component.scss',
 })
-export class InsightsComponent implements OnInit {
+export class OverviewComponent implements OnInit {
   totalRevenue: number = 0;
   numberOfSales: number = 0;
   averageTicket: number = 0;

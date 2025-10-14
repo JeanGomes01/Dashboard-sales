@@ -17,13 +17,15 @@ export const routes: Routes = [
         redirectTo: 'overview',
         pathMatch: 'full',
       },
+
       {
         path: 'overview',
         loadComponent: () =>
-          import('./modules/dashboard/dashboard.component').then(
-            (c) => c.DashboardComponent
+          import('./modules/overview/overview.component').then(
+            (c) => c.OverviewComponent
           ),
       },
+
       {
         path: 'reports',
         loadComponent: () =>
@@ -31,13 +33,7 @@ export const routes: Routes = [
             (c) => c.ReportsComponent
           ),
       },
-      {
-        path: 'insights',
-        loadComponent: () =>
-          import('./modules/insights/insights.component').then(
-            (c) => c.InsightsComponent
-          ),
-      },
+
       {
         path: 'contact',
         loadComponent: () =>
