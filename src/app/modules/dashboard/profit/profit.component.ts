@@ -24,7 +24,7 @@ export class ProfitComponent {
   @ViewChild('profitCanvas', { static: false })
   profitCanvas!: ElementRef<HTMLCanvasElement>;
   profitChart!: Chart;
-  titleText: string = 'Lucro';
+  titleText: string = 'Lucro Vendas';
 
   @Output() profitChange = new EventEmitter<number>();
   @Output() titleChange = new EventEmitter<string>();

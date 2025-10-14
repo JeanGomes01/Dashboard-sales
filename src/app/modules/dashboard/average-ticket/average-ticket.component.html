@@ -1,16 +1,9 @@
-<div
-  class="bg-white rounded-2xl p-4 w-full h-80 flex flex-col items-center justify-between shadow-[0_0_0_1px_rgba(0,0,0,0.05)]"
->
-  <h3 class="text-lg font-semibold text-center mb-2">{{ titleText }}</h3>
+<div class="w-full h-80 flex flex-col items-center justify-center border shadow-[0_0_0_1px_rgba(0,0,0,0.05)] bg-white rounded-xl p-4">
+    <h3 class="text-lg font-semibold text-center mb-2">{{ titleText }}</h3>
 
-  @if (isLoading) {
-  <div class="flex flex-1 items-center justify-center">
-    <svg
-      class="animate-spin h-6 w-6 text-blue-600"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-    >
+    @if (isLoading) {
+    <div class="flex flex-1 items-center justify-center">
+        <svg class="animate-spin h-6 w-6 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
       <circle
         class="opacity-25"
         cx="12"
@@ -25,8 +18,8 @@
         d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
       ></path>
     </svg>
-    <span class="ml-2 text-gray-500">Carregando gráfico...</span>
-  </div>
-  } @else {
-  <canvas #averageTicketCanvas class="w-full flex-1"></canvas> }
+        <span class="ml-2 text-gray-500">Carregando gráfico...</span>
+    </div>
+    } @else {
+    <canvas #averageTicketCanvas class="w-full flex-1"></canvas> }
 </div>

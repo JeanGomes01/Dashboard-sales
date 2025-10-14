@@ -23,7 +23,7 @@ export class AverageTicketComponent {
   @ViewChild('averageTicketCanvas', { static: false })
   averageTicketCanvas!: ElementRef<HTMLCanvasElement>;
   averageTicketChart!: Chart;
-  titleText: string = 'Ticket Médio';
+  titleText: string = 'Média Vendas';
   isLoading: boolean = true;
 
   @Output() averageTicketChange = new EventEmitter<number>();

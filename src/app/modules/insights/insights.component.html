@@ -1,1 +1,65 @@
-<p>insights works!</p>
+<div class="flex flex-col gap-6 p-6 bg-gray-50 min-h-screen">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="border shadow-[0_0_0_1px_rgba(0,0,0,0.05)] bg-white rounded-xl p-4 border-gray-200 flex flex-col">
+            <h3 class="text-sm font-medium text-gray-500">Receita Total</h3>
+            <p class="text-2xl font-bold text-gray-800 mt-2">
+                {{ totalRevenue | currency : "BRL" }}
+            </p>
+            <p class="text-green-500 text-sm mt-1">+12% vs mês anterior</p>
+        </div>
+
+        <div class="border shadow-[0_0_0_1px_rgba(0,0,0,0.05)] bg-white rounded-xl p-4 border-gray-200 flex flex-col">
+            <h3 class="text-sm font-medium text-gray-500">Número de Vendas</h3>
+            <p class="text-2xl font-bold text-gray-800 mt-2">{{ numberOfSales }}</p>
+            <p class="text-green-500 text-sm mt-1">+8% vs mês anterior</p>
+        </div>
+
+        <div class="border shadow-[0_0_0_1px_rgba(0,0,0,0.05)] bg-white rounded-xl p-4 border-gray-200 flex flex-col">
+            <h3 class="text-sm font-medium text-gray-500">Ticket Médio</h3>
+            <p class="text-2xl font-bold text-gray-800 mt-2">
+                {{ averageTicket | currency : "BRL" }}
+            </p>
+            <p class="text-green-500 text-sm mt-1">+5% vs mês anterior</p>
+        </div>
+
+        <div class="border shadow-[0_0_0_1px_rgba(0,0,0,0.05)] bg-white rounded-xl p-4 border-gray-200 flex flex-col">
+            <h3 class="text-sm font-medium text-gray-500">Lucro por Categoria</h3>
+            <ul class="mt-2 space-y-1">
+                <li *ngFor="let p of profitByCategory">
+                    {{ p.category }}: {{ p.profit | currency : "BRL" }}
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="border shadow-[0_0_0_1px_rgba(0,0,0,0.05)] bg-white rounded-xl p-4 border-gray-200 flex flex-col">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">
+                Evolução das Vendas
+            </h3>
+            <div class="w-full h-64">
+                <canvas id="lineChart" class="w-full h-64"></canvas>
+            </div>
+        </div>
+
+        <div class="border-gray-200 flex flex-col border shadow-[0_0_0_1px_rgba(0,0,0,0.05)] bg-white rounded-xl p-4">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">
+                Vendas por Categoria
+            </h3>
+            <div class="w-full h-64 flex items-center justify-center text-gray-400 italic">
+                <canvas id="pieChart" class="w-full h-64"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="border shadow-[0_0_0_1px_rgba(0,0,0,0.05)] bg-white rounded-xl p-4 border-gray-200 mt-6 text-gray-700">
+        <h3 class="text-lg font-semibold mb-3 text-gray-800">
+            📈 Resumo de Desempenho
+        </h3>
+        <p class="leading-relaxed">
+            As vendas cresceram
+            <span class="font-semibold text-green-600">12%</span> em relação ao mês anterior, impulsionadas pela categoria
+            <span class="font-semibold">Eletrônicos</span>. A região Sudeste continua liderando, mas o Sul apresentou o maior crescimento proporcional.
+        </p>
+    </div>
+</div>
