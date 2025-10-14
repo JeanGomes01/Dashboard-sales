@@ -31,16 +31,27 @@ export class LoginComponent {
   onSubmit() {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
-      const loginSuccess = this.authService.login(email, password);
 
-      if (loginSuccess) {
-        this.showFeedback('Login efetuado com sucesso!', 'success');
-        setTimeout(() => {
-          this.router.navigate(['/']);
-        }, 1500);
-      } else {
-        this.showFeedback('Usuário ou senha incorretos!', 'error');
-      }
+      this.authService.login(email, password).subscribe({
+        next: (response) => {
+          if (response.error) {
+            console.error('Erro no login:', response.error.message);
+            this.showFeedback('Usuário ou senha incorretos !', 'error');
+            return;
+          }
+          if (response.data?.session) {
+            this.showFeedback('Login efetuado com sucesso !', 'success');
+
+            setTimeout(() => {
+              this.router.navigate(['/']);
+            }, 1500);
+          }
+        },
+        error: (error) => {
+          console.error('Erro inesperado no login:', error);
+          this.showFeedback('Ocorreu um erro. Tente novamente!', 'error');
+        },
+      });
     } else {
       this.loginForm.markAllAsTouched();
     }

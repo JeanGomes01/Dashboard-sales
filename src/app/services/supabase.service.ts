@@ -14,8 +14,8 @@ export class SupabaseService {
       environment.nextPublicSupabaseAnonKey,
       {
         auth: {
-          persistSession: false,
-          autoRefreshToken: false,
+          persistSession: true,
+          autoRefreshToken: true,
         },
       }
     );
