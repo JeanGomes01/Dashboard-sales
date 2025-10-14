@@ -1,17 +1,21 @@
-<div class="p-6 flex flex-col gap-6">
-    <div class="border shadow-[0_0_0_1px_rgba(0,0,0,0.05)] bg-white rounded-xl p-4">
-        <h2 class="text-xl font-semibold mb-4 text-gray-800">Gerar Relatório</h2>
+<div class="p-4 sm:p-6 md:p-8 flex flex-col gap-6 max-w-full">
+    <!-- Gerar Relatório -->
+    <div class="border shadow-[0_0_0_1px_rgba(0,0,0,0.05)] bg-white rounded-xl p-4 sm:p-6">
+        <h2 class="text-xl sm:text-2xl font-semibold mb-4 text-gray-800">
+            Gerar Relatório
+        </h2>
 
-        <div class="flex flex-col sm:flex-row gap-4 sm:items-end justify-between">
-            <div class="flex flex-wrap gap-4">
-                <select [(ngModel)]="reportType" (change)="onReportTypeChange($event)" class="border-gray-300 px-4 py-2 text-sm focus:ring-2 focus:ring-blue-200 border shadow-[0_0_0_1px_rgba(0,0,0,0.05)] bg-white rounded-xl p-4">
+        <div class="flex flex-col sm:flex-row sm:items-end gap-4 justify-between">
+            <!-- Selects -->
+            <div class="flex flex-col sm:flex-row flex-wrap gap-4 w-full sm:w-auto">
+                <select [(ngModel)]="reportType" (change)="onReportTypeChange($event)" class="w-full sm:w-auto border-gray-300 px-3 py-2 sm:px-4 sm:py-2 text-sm sm:text-base focus:ring-2 focus:ring-blue-200 border shadow-[0_0_0_1px_rgba(0,0,0,0.05)] bg-white rounded-xl transition">
           <option value="total-sales">Total de Vendas</option>
           <option value="profit">Lucro de Vendas</option>
           <option value="average-ticket">Média de Vendas</option>
           <option value="monthly-growth">Crescimento Mensal</option>
         </select>
 
-                <select [(ngModel)]="period" (change)="onPeriodChange($event)" class="border-gray-300 px-4 py-2 text-sm focus:ring-2 focus:ring-blue-200 border shadow-[0_0_0_1px_rgba(0,0,0,0.05)] bg-white rounded-xl p-4">
+                <select [(ngModel)]="period" (change)="onPeriodChange($event)" class="w-full sm:w-auto border-gray-300 px-3 py-2 sm:px-4 sm:py-2 text-sm sm:text-base focus:ring-2 focus:ring-blue-200 border shadow-[0_0_0_1px_rgba(0,0,0,0.05)] bg-white rounded-xl transition">
           <option value="this-week">Esta semana</option>
           <option value="this-month">Este mês</option>
           <option value="this-year">Este ano</option>
@@ -19,20 +23,21 @@
         </select>
             </div>
 
-            <div class="flex gap-2">
-                <button (click)="exportCSV()" class="bg-gray-900 text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition">
+            <!-- Botões -->
+            <div class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+                <button (click)="exportCSV()" class="w-full sm:w-auto bg-gray-900 text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition">
           Exportar CSV
         </button>
-
-                <button (click)="exportPDF()" class="bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition">
+                <button (click)="exportPDF()" class="w-full sm:w-auto bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition">
           Exportar PDF
         </button>
             </div>
         </div>
     </div>
 
-    <div class="shadow-md bg-white rounded-xl p-4">
-        <h2 class="text-xl font-semibold mb-4 text-gray-800 flex items-center gap-2">
+    <!-- Tabela de Relatório -->
+    <div class="shadow-md bg-white rounded-xl p-4 sm:p-6 overflow-x-auto">
+        <h2 class="text-xl sm:text-2xl font-semibold mb-4 text-gray-800 flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 text-blue-600">
         <path
           stroke-linecap="round"
@@ -42,52 +47,53 @@
       </svg> {{ reportType.replace("-", " ") | titlecase }}
         </h2>
 
-        <div class="overflow-x-auto rounded-xl border border-gray-100">
-            <table class="min-w-full text-sm text-gray-700">
-                <thead class="bg-gray-50 text-gray-600 uppercase text-xs">
-                    <tr>
-                        <th class="px-6 py-3 text-left">Name</th>
-                        <th class="px-6 py-3 text-left">Category</th>
-                        <th class="px-6 py-3 text-left">Data</th>
-                        <th class="px-6 py-3 text-left">Valor</th>
-                        <th class="px-6 py-3 text-left">Quantity</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-100">
-                    <tr *ngFor="let item of pagedData" class="hover:bg-gray-50 transition">
-                        <td class="px-6 py-3">{{ item.product }}</td>
-                        <td class="px-6 py-3">{{ item.category }}</td>
-                        <td class="px-6 py-3">{{ item.date | date : "dd/MM/yyyy" }}</td>
-                        <td class="px-6 py-3">{{ item.value | number : "1.2-2" }}</td>
-                        <td class="px-6 py-3">{{ item.quantity }}</td>
-                    </tr>
+        <table class="min-w-full text-sm sm:text-base text-gray-700 border-collapse">
+            <thead class="bg-gray-50 text-gray-600 uppercase text-xs sm:text-sm">
+                <tr>
+                    <th class="px-4 sm:px-6 py-2 text-left">Name</th>
+                    <th class="px-4 sm:px-6 py-2 text-left">Category</th>
+                    <th class="px-4 sm:px-6 py-2 text-left">Data</th>
+                    <th class="px-4 sm:px-6 py-2 text-left">Valor</th>
+                    <th class="px-4 sm:px-6 py-2 text-left">Quantity</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+                <tr *ngFor="let item of pagedData" class="hover:bg-gray-50 transition">
+                    <td class="px-4 sm:px-6 py-2">{{ item.product }}</td>
+                    <td class="px-4 sm:px-6 py-2">{{ item.category }}</td>
+                    <td class="px-4 sm:px-6 py-2">
+                        {{ item.date | date : "dd/MM/yyyy" }}
+                    </td>
+                    <td class="px-4 sm:px-6 py-2">{{ item.value | number : "1.2-2" }}</td>
+                    <td class="px-4 sm:px-6 py-2">{{ item.quantity }}</td>
+                </tr>
 
-                    <tr *ngIf="!filteredData?.length">
-                        <td colspan="2" class="px-6 py-6 text-center text-gray-500 italic">
-                            Nenhum dado encontrado.
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="flex justify-center items-center mt-4 gap-2">
-                <button (click)="previousPage()" [disabled]="currentPage === 1" class="px-3 py-2 bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200 disabled:opacity-50">
-          ← Anterior
+                <tr *ngIf="!filteredData?.length">
+                    <td colspan="5" class="px-4 sm:px-6 py-6 text-center text-gray-500 italic">
+                        Nenhum dado encontrado.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Paginação -->
+        <div class="flex flex-wrap justify-center items-center mt-4 gap-2">
+            <button (click)="previousPage()" [disabled]="currentPage === 1" class="px-3 py-2 bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200 disabled:opacity-50">
+        ← Anterior
+      </button>
+
+            <ng-container *ngFor="let page of totalPagesArray()">
+                <button (click)="goToPage(page)" [ngClass]="{
+            'bg-gray-800 text-white': currentPage === page,
+            'bg-gray-100 text-gray-700 hover:bg-gray-200': currentPage !== page
+          }" class="px-3 py-2 rounded-lg transition">
+          {{ page }}
         </button>
+            </ng-container>
 
-                <ng-container *ngFor="let page of totalPagesArray()">
-                    <button (click)="goToPage(page)" [ngClass]="{
-              'bg-gray-800 text-white': currentPage === page,
-              'bg-gray-100 text-gray-700 hover:bg-gray-200':
-                currentPage !== page
-            }" class="px-3 py-2 rounded-lg transition">
-            {{ page }}
-          </button>
-                </ng-container>
-
-                <button (click)="nextPage()" [disabled]="currentPage === totalPages" class="px-3 py-2 bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200 disabled:opacity-50">
-          Próximo →
-        </button>
-            </div>
+            <button (click)="nextPage()" [disabled]="currentPage === totalPages" class="px-3 py-2 bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200 disabled:opacity-50">
+        Próximo →
+      </button>
         </div>
     </div>
 </div>
