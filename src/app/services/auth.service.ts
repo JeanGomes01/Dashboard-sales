@@ -23,11 +23,6 @@ export class AuthService {
   getCurrentUser() {
     return from(this.supabaseService.supabase.auth.getUser());
   }
-  //Proteger rotas com o AuthGuard, o ideal é usar async/await direto (retornando Promise<boolean>), porque o método canActivate() do Angular aceita Promise, mas não Observable sem conversão.
-  // async isAuthenticated(): Promise<boolean> {
-  //   const { data } = await this.supabaseService.supabase.auth.getSession();
-  //   return !!data.session;
-  // }
 
   isAuthenticated(): Observable<boolean> {
     return from(this.supabaseService.supabase.auth.getSession()).pipe(
