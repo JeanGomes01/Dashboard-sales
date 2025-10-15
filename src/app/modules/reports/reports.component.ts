@@ -1,10 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-
 import { FormsModule } from '@angular/forms';
 import jsPDF from 'jspdf';
-import 'jspdf-autotable';
-
 import { SalesService } from '../../services/sales.service';
 import { SupabaseService } from '../../services/supabase.service';
 import { Sale } from '../../types/sales.interface';
