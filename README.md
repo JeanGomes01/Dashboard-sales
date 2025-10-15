@@ -4,12 +4,13 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.5-blue?style=for-the-badge&logo=typescript)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?style=for-the-badge&logo=tailwind-css)
 ![Chart.js](https://img.shields.io/badge/Chart.js-4.5-FF6384?style=for-the-badge&logo=chart.js)
+![Supabase](https://img.shields.io/badge/Supabase-2.75-3ECF8E?style=for-the-badge&logo=supabase)
 
-Um dashboard moderno e responsivo para análise de vendas, desenvolvido com Angular 18, Tailwind CSS e Chart.js. A aplicação oferece visualizações interativas de dados de vendas, relatórios detalhados e insights de negócio.
+Um dashboard moderno e responsivo para análise de vendas, desenvolvido com Angular 18, Tailwind CSS, Chart.js e Supabase. A aplicação oferece visualizações interativas de dados de vendas, relatórios detalhados e insights de negócio, com autenticação segura e banco de dados em tempo real.
 
 ## ✨ Funcionalidades
 
-### 🏠 Dashboard Principal
+### 🏠 Overview Principal
 
 - **Total de Vendas**: Visualização do faturamento total
 - **Ticket Médio**: Análise do valor médio por venda
@@ -25,9 +26,10 @@ Um dashboard moderno e responsivo para análise de vendas, desenvolvido com Angu
 
 ### 🔐 Autenticação
 
-- Sistema de login seguro
+- Sistema de login seguro com Supabase Auth
 - Controle de acesso às funcionalidades
-- Gerenciamento de sessão do usuário
+- Gerenciamento de sessão do usuário em tempo real
+- Autenticação persistente e auto-refresh de tokens
 
 ### 📱 Interface Responsiva
 
@@ -44,6 +46,7 @@ Um dashboard moderno e responsivo para análise de vendas, desenvolvido com Angu
 - **Tailwind CSS 3.4** - Framework de estilos
 - **Chart.js 4.5** - Biblioteca de gráficos
 - **RxJS 7.8** - Programação reativa
+- **Supabase 2.75** - Backend-as-a-Service
 
 ### Ferramentas de Desenvolvimento
 
@@ -52,10 +55,17 @@ Um dashboard moderno e responsivo para análise de vendas, desenvolvido com Angu
 - **PostCSS** - Processamento de CSS
 - **Autoprefixer** - Compatibilidade de CSS
 
+### Backend e Banco de Dados
+
+- **Supabase** - Backend completo com PostgreSQL
+- **Supabase Auth** - Sistema de autenticação
+- **Real-time subscriptions** - Atualizações em tempo real
+- **Row Level Security** - Segurança a nível de linha
+- **APIs REST automáticas** - Endpoints gerados automaticamente
+
 ### Bibliotecas Externas
 
 - **jsPDF 3.0** - Geração de PDFs
-- **DummyJSON API** - Dados de exemplo para desenvolvimento
 
 ## 🗂 Estrutura do Projeto
 
@@ -66,26 +76,25 @@ dashboard-sales/
 │   │   ├── modules/                    # Módulos por funcionalidade
 │   │   │   ├── auth/                   # Autenticação
 │   │   │   │   └── login/             # Componente de login
-│   │   │   ├── dashboard/             # Dashboard principal
-│   │   │   │   ├── total-sales/       # Total de vendas
-│   │   │   │   ├── profit/            # Análise de lucro
-│   │   │   │   ├── average-ticket/    # Ticket médio
-│   │   │   │   └── monthly-growth/    # Crescimento mensal
+│   │   │   ├── overview/              # Overview principal
 │   │   │   ├── reports/               # Relatórios
-│   │   │   ├── insights/              # Insights e análises
 │   │   │   ├── contact/               # Contato
 │   │   │   └── layout/                # Layout principal
 │   │   ├── services/                  # Serviços Angular
 │   │   │   ├── auth.service.ts        # Serviço de autenticação
 │   │   │   ├── sales.service.ts       # Serviço de vendas
-│   │   │   └── reports.service.ts     # Serviço de relatórios
+│   │   │   └── supabase.service.ts    # Serviço Supabase
 │   │   ├── types/                     # Interfaces TypeScript
 │   │   │   ├── sales.interface.ts     # Interface de vendas
 │   │   │   ├── reports.interface.ts   # Interface de relatórios
 │   │   │   └── login.interface.ts     # Interface de login
-│   │   └── app.routes.ts              # Configuração de rotas
+│   │   ├── app.routes.ts              # Configuração de rotas
+│   │   └── app.config.ts              # Configuração da aplicação
 │   ├── components/                     # Componentes compartilhados
 │   │   └── sidebar/                   # Sidebar de navegação
+│   ├── environments/                  # Configurações de ambiente
+│   │   ├── environment.ts             # Ambiente de produção
+│   │   └── environment.development.ts # Ambiente de desenvolvimento
 │   └── styles.css                     # Estilos globais
 ├── package.json                       # Dependências do projeto
 ├── tailwind.config.ts                 # Configuração do Tailwind
@@ -139,12 +148,15 @@ npm run watch          # Compila em modo watch
 npm test              # Executa os testes unitários
 ```
 
-## 📊 APIs e Dados
+## 📊 Backend e Dados
 
-O projeto utiliza as seguintes APIs para dados de exemplo:
+O projeto utiliza Supabase como backend completo:
 
-- **DummyJSON Carts API**: Dados de carrinho de compras
-- **FakeStore API**: Dados de produtos para análise
+- **Supabase PostgreSQL**: Banco de dados principal
+- **Supabase Auth**: Sistema de autenticação
+- **Real-time subscriptions**: Atualizações em tempo real
+- **Row Level Security**: Segurança a nível de linha
+- **APIs REST automáticas**: Endpoints gerados automaticamente
 
 ### Estrutura de Dados
 
@@ -162,12 +174,13 @@ interface Sale {
 
 ## 🎨 Funcionalidades Detalhadas
 
-### Dashboard
+### Overview
 
 - **Métricas em Tempo Real**: Total de vendas, ticket médio, crescimento mensal
 - **Gráficos Interativos**: Visualizações com Chart.js
 - **Categorização**: Análise por categoria de produtos
 - **Filtros Temporais**: Análise por período
+- **Dados Dinâmicos**: Atualizações em tempo real via Supabase
 
 ### Relatórios
 
@@ -177,9 +190,11 @@ interface Sale {
 
 ### Autenticação
 
-- **Login Seguro**: Sistema de autenticação
-- **Controle de Sessão**: Gerenciamento de usuário logado
+- **Login Seguro**: Sistema de autenticação com Supabase Auth
+- **Controle de Sessão**: Gerenciamento de usuário logado em tempo real
 - **Proteção de Rotas**: Acesso controlado às funcionalidades
+- **Persistência de Sessão**: Login mantido entre sessões
+- **Auto-refresh de Tokens**: Renovação automática de tokens de acesso
 
 ## 🔧 Configuração do Tailwind CSS
 
@@ -245,9 +260,9 @@ Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalh
 
 Interface e experiência do usuário desenvolvidas com foco na usabilidade e design moderno.
 
-|            Dashboard Principal            |           Tela de Login            |
+|            Overview Principal            |           Tela de Login            |
 | :---------------------------------------: | :--------------------------------: |
-| ![Dashboard](github/tela-de-overview.png) | ![Login](github/tela-de-login.png) |
+| ![Overview](github/tela-de-overview.png) | ![Login](github/tela-de-login.png) |
 
 |              Tela de Relatórios              |
 | :------------------------------------------: |
